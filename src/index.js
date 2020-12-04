@@ -13,6 +13,8 @@ const refs = {
   sentinel: document.querySelector('#sentinel'),
 };
 
+const imgApiService = new ImgApiService();
+
 const myStack = new Stack({
   dir1: 'down',
   dir2: 'left',
@@ -20,13 +22,11 @@ const myStack = new Stack({
   firstpos2: 25,
   push: 'top',
   maxStrategy: 'close',
-  maxOpen: 1
+  maxOpen: 1,
+  maxClosureCausesWait: false
 });
 
 refs.imagesContainer.addEventListener('click', onImgClick)
-
-const imgApiService = new ImgApiService();
-
 refs.searchForm.addEventListener('submit', onSearch);
 
 function onImgClick(evt) {
@@ -60,6 +60,7 @@ function onSearch(e) {
 function fetchImages() {
   imgApiService.fetchImages().then(images => {
     appendImagesMarkup(images);
+    console.log(images);
     if (images.length > 0) {
       success({
         title: 'Success!',
